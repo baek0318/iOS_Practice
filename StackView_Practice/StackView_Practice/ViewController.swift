@@ -35,7 +35,6 @@ class ViewController: UIViewController {
         label.text = "Ocean"
         
         let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = UIImage(named: "ocean")
         imageView.setContentHuggingPriority(UILayoutPriority(249), for: .vertical)
         imageView.setContentCompressionResistancePriority(UILayoutPriority(749), for: .vertical)
