@@ -11,6 +11,8 @@ class SecondViewController : UIViewController {
     
     var mainView : UIView?
     
+    @IBOutlet weak var underView: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         print("call second view")

@@ -36,6 +36,7 @@ final class Animator : NSObject, UIViewControllerAnimatedTransitioning {
         secondViewController.mainView?.backgroundColor = .clear
         secondViewController.mainView?.layoutIfNeeded()
         guard let secondSize = secondViewController.mainView?.frame.size else {return}
+        
         let secondPoint = CGPoint(x: 0, y: 0)
         
         let newView : UIView = {
@@ -45,13 +46,19 @@ final class Animator : NSObject, UIViewControllerAnimatedTransitioning {
             return view
         }()
         
+        let underView = secondViewController.underView
+        
         containerView.addSubview(toView)
         toView.alpha = 0
         containerView.addSubview(newView)
+        containerView.addSubview(underView!)
         
-        UIView.animate(withDuration: 0.75, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.5, options: .curveEaseIn) {
+        underView?.transform = CGAffineTransform(translationX: 0, y: 900)
+        
+        UIView.animate(withDuration: 0.75, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: .curveEaseIn) {
             newView.frame.size = secondSize
             newView.frame.origin = secondPoint
+            underView?.transform = .identity
             toView.alpha = 1
             
         } completion: { (_) in

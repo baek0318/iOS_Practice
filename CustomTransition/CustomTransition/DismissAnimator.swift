@@ -39,13 +39,15 @@ final class DismissAnimator : NSObject, UIViewControllerAnimatedTransitioning {
             return view
         }()
         
+        let underView = secondViewController.underView
+        
         containerView.addSubview(newView)
         self.firstViewController.mainView?.alpha = 0
         
-        UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.3, options: .curveEaseIn) {
+        UIView.animate(withDuration: 0.75, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: .curveEaseIn) {
             
             newView.frame = self.firstViewController.mainView!.frame
-            
+            underView?.transform = CGAffineTransform(translationX: 0, y: 900)
             fromView.alpha = 0
             
         } completion: { (_) in
