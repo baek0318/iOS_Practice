@@ -7,25 +7,30 @@
 
 import Foundation
 
-class Member {
+public class Member {
+
+    private var _name : String
     
-    private var id : Int64
+    public var name : String {
+        get {
+            return _name
+        }
+        set {
+            self._name = newValue
+        }
+    }
     
-    private var name : String
-    
-    init(id : Int64, name : String) {
-        self.id = id
-        self.name = name
+    public init(name : String) {
+        self._name = name
     }
 }
 
 extension Member : Hashable {
-    static func == (lhs: Member, rhs: Member) -> Bool {
-        return lhs.id == rhs.id && lhs.name == rhs.name
+    public static func == (lhs: Member, rhs: Member) -> Bool {
+        return  lhs._name == rhs._name
     }
     
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-        hasher.combine(name)
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(_name)
     }
 }

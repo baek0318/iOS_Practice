@@ -1,5 +1,5 @@
 //
-//  ScheduleTimerService.swift
+//  Timer.swift
 //  Scheduler
 //
 //  Created by 백승화 on 2020/12/07.
@@ -7,42 +7,28 @@
 
 import Foundation
 
-public class ScheduleTimerService : ScheduleTimerServiceProtocol {
+protocol ScheduleTimerServiceProtocol {
     
-    private let repository = MemoryScheduleTableRepository()
-    private let scheduleTimer = ScheduleTimer()
+    /// 시작버튼을 눌렀을때에 불려지는 메서드
+    /// - Parameters:
+    ///   - start: 시작시간을 넘겨준다
+    ///   - end: 지정한 끝나는 시간을 넘겨준다
+    func start(start: Time, end: Time)
     
-    public func start(start : Time, end: Time) {
-        scheduleTimer.startTime = start
-        scheduleTimer.endTime = end
-    }
+    /// timer의 끝냄 버튼을 눌렀거나 제한시간이 다된경우 불리는 메서드
+    /// - Parameter time: 끝냄 버튼을 누른 시점의 시간이 넘겨진다
+    func end(time : Time) -> ScheduleTable
     
-    public func end(time: Time) -> ScheduleTable {
-        scheduleTimer.endTime = time
-        
-        let calendar = ScheduleCalendar.makeCalendar()
-        
-        return ScheduleTable(calendar: calendar, timer: scheduleTimer)
-    }
+    /// 끝나는 시점을 연장시킬 수 있는 메서드
+    /// - Parameter time: 연장시킬 시간을 넘겨주면 된다
+    func extend(time : Time) throws
     
-    public func extend(time : Time) throws {
-        
-        if time.hour < scheduleTimer.endTime.hour {
-            throw ScheduleTimerError.shorterThanOrigin
-        }
-        if time.hour == scheduleTimer.endTime.hour && time.minute <= scheduleTimer.endTime.minute {
-            throw ScheduleTimerError.shorterThanOrigin
-        }
-        
-        scheduleTimer.endTime = time
-    }
+    /// 지금 타이머의 주제를 바꿀 수 있는 메서드
+    /// - Parameter title: 바꾸고 싶은 문자열을 입력하면 된다
+    func changeTitle(title : String)
     
-    public func changeTitle(title: String) {
-        scheduleTimer.title = title
-    }
-    
-    public func enroll(returnData: ScheduleTable) {
-        repository.save(scheduleTable: returnData)
-    }
+    /// 끝난 스케줄을 저장소에 저장해주는 메서드이다
+    /// - Parameter returnData: 저장할 데이터를 넘겨줄 매개변수이다
+    func enroll(returnData : ScheduleTable)
     
 }

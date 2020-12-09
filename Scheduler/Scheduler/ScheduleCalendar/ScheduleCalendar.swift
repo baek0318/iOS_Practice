@@ -9,14 +9,47 @@ import Foundation
 
 public class ScheduleCalendar {
     
-    private var year : Int
-    private var month : Int
-    private var day : Int
+    private var _year : Int
+    private var _month : Int
+    private var _day : Int
+    
+    public var year : Int {
+        get {
+            return _year
+        }
+        set {
+            self._year = newValue
+        }
+    }
+    
+    public var month : Int {
+        get {
+            return _month
+        }
+        set {
+            self._month = newValue
+        }
+    }
+    
+    public var day : Int {
+        get {
+            return _day
+        }
+        set {
+            self._day = newValue
+        }
+    }
+    
+    public init(){
+        self._year = 0
+        self._month = 0
+        self._day = 0
+    }
     
     public init(year : Int, month : Int, day : Int) {
-        self.year = year
-        self.month = month
-        self.day = day
+        self._year = year
+        self._month = month
+        self._day = day
     }
     
     public static func makeCalendar() -> ScheduleCalendar {
@@ -34,12 +67,12 @@ public class ScheduleCalendar {
 extension ScheduleCalendar : Hashable {
     
     public static func == (lhs: ScheduleCalendar, rhs: ScheduleCalendar) -> Bool {
-        return lhs.year == rhs.year && lhs.month == rhs.month && lhs.day == rhs.day
+        return lhs._year == rhs._year && lhs._month == rhs._month && lhs._day == rhs._day
     }
     
     public func hash(into hasher: inout Hasher) {
-        hasher.combine(year)
-        hasher.combine(month)
-        hasher.combine(day)
+        hasher.combine(_year)
+        hasher.combine(_month)
+        hasher.combine(_day)
     }
 }
